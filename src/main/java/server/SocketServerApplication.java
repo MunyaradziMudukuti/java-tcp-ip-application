@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class SocketServerApplication {
@@ -20,28 +22,10 @@ public class SocketServerApplication {
 
                 Socket s = server.accept(); // server in waiting state
 
-                Scanner sc = new Scanner(System.in);
+//                //Send a message to the client
+               PrintWriter pw = new PrintWriter(s.getOutputStream());
 
-                Scanner scan = new Scanner(s.getInputStream());
-
-                String message = scan.nextLine();
-
-                String messageToClient = sc.nextLine();
-
-                System.out.println("The client said: " + message);
-
-                //Send a message to the client
-                PrintWriter pw = new PrintWriter(s.getOutputStream());
-
-                System.out.println("Please enter message:");
-
-                if (messageToClient.equalsIgnoreCase("exit")) {
-                    close = 1;
-                    server.close();
-
-                }
-
-                pw.println(messageToClient);
+                pw.println(LocalTime.now().toString());
 
                 pw.flush(); //From the buffer to you, and refresh the buffer
 
